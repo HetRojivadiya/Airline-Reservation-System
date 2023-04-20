@@ -1,0 +1,19 @@
+
+
+Version:	3.50
+CmdLine:	C:\Users\hetro\OneDrive\Documents\NetBeansProjects\Skyline\dist\SkyLine.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\hetro\OneDrive\Documents\NetBeansProjects\Skyline\dist\.
+Requires JDK:	Yes
+Requires 64-Bit: Yes
+Java min ver:	
+Java max ver:	
+JRE paths:	C:\Program Files\Java\jdk-17.0.4
+Check launcher:	C:\Program Files\Java\jdk-17.0.4\bin\javaw.exe (OK)
+Check javac:	C:\Program Files\Java\jdk-17.0.4\bin\javac.exe (OK)
+Version string: 1.017.000_004 / 64-Bit (OK)
+Launcher:	C:\Program Files\Java\jdk-17.0.4\bin\javaw.exe
+Launcher args:	-jar "C:\Users\hetro\OneDrive\Documents\NetBeansProjects\Skyline\dist\SkyLine.exe"
+Args length:	82/32768 chars
+Exit code:	0
