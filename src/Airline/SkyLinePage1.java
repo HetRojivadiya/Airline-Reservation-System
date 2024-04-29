@@ -4,14 +4,13 @@
  */
 package Airline;
 
-import Airline.AR2;
-import Airline.ControlRoom;
-import Airline.CreateAccount;
-import Airline.forgotPassword;
-import Airline.temp;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import java.util.Date;
 
 /**
  *
@@ -25,6 +24,74 @@ public class SkyLinePage1 extends javax.swing.JFrame {
     public SkyLinePage1() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        CheckTickets();
+    }
+
+    public void CheckTickets() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline", "root", "");
+
+            Statement stm = conn.createStatement();
+            Statement stm1 = conn.createStatement();
+            Statement stm2 = conn.createStatement();
+
+            ResultSet rs = stm.executeQuery("select * from flight");
+
+            while (rs.next()) {
+
+                String dateString = "Jul 10, 2023";
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, u");
+
+                LocalDate currentDate = LocalDate.now();
+                LocalDate date = LocalDate.parse(dateString, formatter);
+
+                int todayMonth = currentDate.getMonthValue();
+                int dateMonth = date.getMonthValue();
+
+                int day = currentDate.getDayOfMonth();
+                int ticketday = date.getDayOfMonth();
+                // Compare the months
+
+                if ((todayMonth == dateMonth) && (ticketday - day <= 2)) {
+
+                    ResultSet rs1 = stm1.executeQuery("select * from ticket where Flight_No=" + rs.getInt(1) + "");
+
+                    int count = 0;
+
+                    while (rs1.next()) {
+                        String seat = rs1.getString(9);
+
+                        for (int i = 0; i < seat.length(); i++) {
+                            char t = seat.charAt(i);
+                            if (t == ' ') {
+                                count++;
+                            }
+                        }
+
+                    }
+                    if (count <= 20) {
+
+                        PreparedStatement ps = conn.prepareStatement("delete from flight  where Flight_No=" + rs.getInt(1));
+                        ps.executeUpdate();
+
+                        ResultSet rs2 = stm2.executeQuery("select email from ticket inner join accounts on ticket.Mobile=accounts.mobile where Flight_No=" + rs.getInt(1));
+
+                        while (rs2.next()) {
+                            //EmailSender.main();
+                        }
+
+                        PreparedStatement ps1 = conn.prepareStatement("delete from ticket where Flight_No=" + rs.getInt(1));
+                        ps1.executeUpdate();
+                    }
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

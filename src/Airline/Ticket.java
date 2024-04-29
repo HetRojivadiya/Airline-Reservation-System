@@ -4,49 +4,113 @@
  */
 package Airline;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 /**
  *
  * @author hetro
  */
 public class Ticket extends javax.swing.JFrame {
-       
+
+    
+
     /**
      * Creates new form Ticket
      */
-    public Ticket() {
+    public Ticket() throws IOException {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+
         n1.setText(temp.tempHoldername);
         n2.setText(temp.tempHoldername);
         n3.setText(temp.tempHoldername);
-        
+
         t1.setText(temp.tempTime);
         t2.setText(temp.tempTime);
         t3.setText(temp.tempTime);
-        
+
         l1.setText(temp.tempLocation);
         l2.setText(temp.tempLocation);
         l3.setText(temp.tempLocation);
-        
+
         d1.setText(temp.tempDestination);
         d2.setText(temp.tempDestination);
         d3.setText(temp.tempDestination);
-         
+
         s1.setText(temp.seat);
         s2.setText(temp.seat);
         s3.setText(temp.seat);
-        
+
         f1.setText(temp.tempFlight);
         f2.setText(temp.tempFlight);
-        
+
         date1.setText(temp.tempDate);
         date2.setText(temp.tempDate);
         date3.setText(temp.tempDate);
-        
+
+        if (temp.indicatorPDF == 0) {
+            // PDF();
+            // EmailSender.main();
+            
+            // temp.indicatorPDF += 1;
         }
+
+    }
+
+    static public void delete() {
+        File file = new File("C:\\Users\\hetro\\OneDrive\\Documents\\NetBeansProjects\\Skyline\\src\\Airline\\document.pdf");
+        file.delete();
+    }
+
+    public void PDF() {
+        BufferedImage image = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+        // Create a Graphics object from the BufferedImage
+        Graphics2D graphics = image.createGraphics();
+
+        // Render the component to the BufferedImage
+        panel.paint(graphics);
+
+        // Dispose the Graphics object
+        graphics.dispose();
+
+        // Save the BufferedImage to a file
+//        try {
+//            ImageIO.write(image, "png", new File(""));
+//            System.out.println("Image saved successfully.");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        try {
+            PDDocument document = new PDDocument();
+            PDPage page = new PDPage(new PDRectangle(panel.getWidth(), panel.getHeight()));
+            document.addPage(page);
+
+            PDImageXObject pdImage = LosslessFactory.createFromImage(document, image);
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+            contentStream.drawImage(pdImage, 0, 0);
+            contentStream.close();
+
+            document.save(new File("C:\\Users\\hetro\\OneDrive\\Documents\\NetBeansProjects\\Skyline\\src\\Airline\\document.pdf"));
+            document.close();
+
+            System.out.println("PDF saved successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,6 +123,8 @@ public class Ticket extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        panel = new javax.swing.JPanel();
         n2 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         t1 = new javax.swing.JLabel();
@@ -88,7 +154,6 @@ public class Ticket extends javax.swing.JFrame {
         t6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -99,149 +164,6 @@ public class Ticket extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Airline/images/4.jpg"))); // NOI18N
         jPanel1.add(jLabel3);
         jLabel3.setBounds(0, 10, 300, 690);
-
-        n2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        n2.setText("Het");
-        jPanel1.add(n2);
-        n2.setBounds(1030, 160, 150, 20);
-
-        jLabel12.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel12.setText("A2");
-        jPanel1.add(jLabel12);
-        jLabel12.setBounds(720, 310, 20, 20);
-
-        t1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        t1.setText("9:00 AM");
-        jPanel1.add(t1);
-        t1.setBounds(530, 250, 90, 20);
-
-        l1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        l1.setText("Goa");
-        jPanel1.add(l1);
-        l1.setBounds(680, 270, 100, 30);
-
-        d1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        d1.setText("Pune");
-        jPanel1.add(d1);
-        d1.setBounds(850, 280, 90, 14);
-
-        f1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        f1.setText("Vistara");
-        jPanel1.add(f1);
-        f1.setBounds(750, 340, 90, 20);
-
-        jLabel17.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel17.setText("IN04");
-        jPanel1.add(jLabel17);
-        jLabel17.setBounds(720, 340, 50, 20);
-
-        s1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        s1.setText("B1");
-        jPanel1.add(s1);
-        s1.setBounds(870, 310, 130, 20);
-
-        n1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        n1.setText("Het");
-        jPanel1.add(n1);
-        n1.setBounds(540, 210, 150, 20);
-
-        l2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        l2.setText("Goa");
-        jPanel1.add(l2);
-        l2.setBounds(1020, 230, 110, 20);
-
-        d2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        d2.setText("Pune");
-        jPanel1.add(d2);
-        d2.setBounds(1140, 230, 70, 20);
-
-        jLabel22.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel22.setText("A1 ");
-        jPanel1.add(jLabel22);
-        jLabel22.setBounds(1060, 310, 20, 20);
-
-        s2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        s2.setText("B1");
-        jPanel1.add(s2);
-        s2.setBounds(1060, 330, 160, 20);
-
-        t3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        t3.setText("9:00AM");
-        jPanel1.add(t3);
-        t3.setBounds(410, 540, 150, 30);
-
-        f2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        f2.setText("Vistara");
-        jPanel1.add(f2);
-        f2.setBounds(1030, 370, 80, 20);
-
-        jLabel26.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel26.setText("IN04");
-        jPanel1.add(jLabel26);
-        jLabel26.setBounds(1060, 350, 30, 20);
-
-        n3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        n3.setText("A1 ");
-        jPanel1.add(n3);
-        n3.setBounds(420, 440, 150, 20);
-
-        l3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        l3.setText("Goa");
-        jPanel1.add(l3);
-        l3.setBounds(420, 490, 90, 20);
-
-        date1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        date1.setText("feb 15,2023");
-        jPanel1.add(date1);
-        date1.setBounds(1070, 280, 100, 30);
-
-        d3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        d3.setText("Pune");
-        jPanel1.add(d3);
-        d3.setBounds(530, 490, 160, 20);
-
-        t4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        t4.setText("Date :");
-        jPanel1.add(t4);
-        t4.setBounds(1030, 280, 50, 30);
-
-        s3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        s3.setText("B1");
-        jPanel1.add(s3);
-        s3.setBounds(420, 630, 150, 20);
-
-        t2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        t2.setText("9:00AM");
-        jPanel1.add(t2);
-        t2.setBounds(1120, 360, 150, 30);
-
-        date2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        date2.setText("feb 15,2023");
-        jPanel1.add(date2);
-        date2.setBounds(450, 570, 120, 40);
-
-        date3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        date3.setText("feb 15,2023");
-        jPanel1.add(date3);
-        date3.setBounds(450, 280, 130, 40);
-
-        t5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        t5.setText("Date :");
-        jPanel1.add(t5);
-        t5.setBounds(410, 580, 40, 20);
-
-        t6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        t6.setText("Date :");
-        jPanel1.add(t6);
-        t6.setBounds(410, 290, 40, 20);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Airline/images/1.jpg"))); // NOI18N
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(340, 70, 913, 350);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Airline/images/2.jpg"))); // NOI18N
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(360, 400, 896, 290);
 
         jButton1.setBackground(new java.awt.Color(204, 255, 204));
         jButton1.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
@@ -261,6 +183,155 @@ public class Ticket extends javax.swing.JFrame {
         jPanel1.add(jButton1);
         jButton1.setBounds(1080, 20, 170, 40);
 
+        panel.setBackground(new java.awt.Color(255, 255, 255));
+        panel.setLayout(null);
+
+        n2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        n2.setText("Het");
+        panel.add(n2);
+        n2.setBounds(700, 70, 150, 20);
+
+        jLabel12.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel12.setText("A2");
+        panel.add(jLabel12);
+        jLabel12.setBounds(390, 220, 20, 20);
+
+        t1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        t1.setText("9:00 AM");
+        panel.add(t1);
+        t1.setBounds(200, 160, 90, 20);
+
+        l1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        l1.setText("Goa");
+        panel.add(l1);
+        l1.setBounds(350, 180, 100, 30);
+
+        d1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        d1.setText("Pune");
+        panel.add(d1);
+        d1.setBounds(520, 190, 90, 14);
+
+        f1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        f1.setText("Vistara");
+        panel.add(f1);
+        f1.setBounds(420, 250, 90, 20);
+
+        jLabel17.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel17.setText("IN04");
+        panel.add(jLabel17);
+        jLabel17.setBounds(390, 250, 50, 20);
+
+        s1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        s1.setText("B1");
+        panel.add(s1);
+        s1.setBounds(540, 220, 130, 20);
+
+        n1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        n1.setText("Het");
+        panel.add(n1);
+        n1.setBounds(210, 120, 150, 20);
+
+        l2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        l2.setText("Goa");
+        panel.add(l2);
+        l2.setBounds(690, 140, 110, 20);
+
+        d2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        d2.setText("Pune");
+        panel.add(d2);
+        d2.setBounds(810, 140, 70, 20);
+
+        jLabel22.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel22.setText("A1 ");
+        panel.add(jLabel22);
+        jLabel22.setBounds(730, 220, 20, 20);
+
+        s2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        s2.setText("B1");
+        panel.add(s2);
+        s2.setBounds(730, 240, 160, 20);
+
+        t3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        t3.setText("9:00AM");
+        panel.add(t3);
+        t3.setBounds(80, 450, 150, 30);
+
+        f2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        f2.setText("Vistara");
+        panel.add(f2);
+        f2.setBounds(700, 280, 80, 20);
+
+        jLabel26.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel26.setText("IN04");
+        panel.add(jLabel26);
+        jLabel26.setBounds(730, 260, 30, 20);
+
+        n3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        n3.setText("A1 ");
+        panel.add(n3);
+        n3.setBounds(90, 350, 150, 20);
+
+        l3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        l3.setText("Goa");
+        panel.add(l3);
+        l3.setBounds(90, 400, 90, 20);
+
+        date1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        date1.setText("feb 15,2023");
+        panel.add(date1);
+        date1.setBounds(740, 190, 100, 30);
+
+        d3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        d3.setText("Pune");
+        panel.add(d3);
+        d3.setBounds(200, 400, 160, 20);
+
+        t4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        t4.setText("Date :");
+        panel.add(t4);
+        t4.setBounds(700, 190, 50, 30);
+
+        s3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        s3.setText("B1");
+        panel.add(s3);
+        s3.setBounds(90, 540, 150, 20);
+
+        t2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        t2.setText("9:00AM");
+        panel.add(t2);
+        t2.setBounds(790, 270, 150, 30);
+
+        date2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        date2.setText("feb 15,2023");
+        panel.add(date2);
+        date2.setBounds(120, 480, 120, 40);
+
+        date3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        date3.setText("feb 15,2023");
+        panel.add(date3);
+        date3.setBounds(120, 190, 130, 40);
+
+        t5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        t5.setText("Date :");
+        panel.add(t5);
+        t5.setBounds(80, 490, 40, 20);
+
+        t6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        t6.setText("Date :");
+        panel.add(t6);
+        t6.setBounds(80, 200, 40, 20);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Airline/images/1.jpg"))); // NOI18N
+        panel.add(jLabel1);
+        jLabel1.setBounds(10, -20, 913, 350);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Airline/images/2.jpg"))); // NOI18N
+        panel.add(jLabel2);
+        jLabel2.setBounds(30, 310, 896, 290);
+
+        jPanel1.add(panel);
+        panel.setBounds(310, 100, 930, 590);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1390, 720);
 
@@ -272,9 +343,9 @@ public class Ticket extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-           Account nt=new Account();
-           nt.setVisible(true);
-           dispose();
+        Account nt = new Account();
+        nt.setVisible(true);
+        dispose();
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -308,7 +379,11 @@ public class Ticket extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ticket().setVisible(true);
+                try {
+                    new Ticket().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Ticket.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -337,6 +412,7 @@ public class Ticket extends javax.swing.JFrame {
     private javax.swing.JLabel n1;
     private javax.swing.JLabel n2;
     private javax.swing.JLabel n3;
+    private javax.swing.JPanel panel;
     private javax.swing.JLabel s1;
     private javax.swing.JLabel s2;
     private javax.swing.JLabel s3;

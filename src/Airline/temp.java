@@ -28,6 +28,7 @@ public class temp {
     static String tempMobile="";
     static String seat=""; 
     static int Flight_no;
+    static int indicatorPDF = 0;
 
     public static void main(String args[]) throws ClassNotFoundException, SQLException {
 
@@ -37,7 +38,7 @@ public class temp {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline", "root", "");
-
+            
             PreparedStatement ps = con.prepareStatement("insert into ticket(Mobile,Location,Destination,Fares,Flight,Date,Time,Seat,Flight_No)values(?,?,?,?,?,?,?,?,?)");
 
             Statement s = con.createStatement();

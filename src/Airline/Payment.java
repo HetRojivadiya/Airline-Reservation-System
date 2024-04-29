@@ -323,11 +323,12 @@ public class Payment extends javax.swing.JFrame {
                             temp n=new temp();
                             Ticket t=new Ticket();
                             t.setVisible(true);
+                            
                             dispose();
                             
                             
                         } catch (Exception e) {
-                            JOptionPane.showMessageDialog(this, "CVV is Wrong");
+                            JOptionPane.showMessageDialog(this, "CVV  Wrong");
                         }
                     } else {
                         JOptionPane.showMessageDialog(this, "CVV is Wrong");
