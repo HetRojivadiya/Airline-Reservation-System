@@ -18,6 +18,12 @@ The Airline Reservation System is a comprehensive software solution developed us
   
 - **SQL:** Utilized SQL databases for efficient storage and management of data.
 
+## Presentation Demo
+
+Check out the presentation demo video of the project on LinkedIn:
+[Project Presentation Demo](https://www.linkedin.com/posts/het-rojivadiya-181ab0226_advancedjava-project-activity-7056700401617690624-j02X?utm_source=share&utm_medium=member_desktop)
+
+
 ## Screenshots
 
 ![Screenshot 1](https://github.com/HetRojivadiya/Airline-Reservation-System/raw/master/Airline/1.png)
